@@ -1,0 +1,31 @@
+#----------Guess the number-------------------
+import random as rd
+#Read a file
+file1=open("D:\PRACTICAL CIE 1\pythoncourse\OOPS\guess.txt",'r')
+highscore=int(file1.read())
+#print(highscore)
+file1.close()
+
+#Code for game
+print("-----Guess Perfect-----")
+number=(rd.randint(1,100))   #for generating a number
+guess=int(input("Guess the number between 1 to 100: "))
+count=1
+while (number!=guess):
+    if guess<number:#for guessing a number
+        print("OOps!!!! Your number is smaller than actual.")
+    else:
+        print("OOps!!!! Your number is bigger than actual.")
+    count+=1
+    guess=int(input("guess the number again: "))
+    
+    if count<highscore:#for highscore
+        print(f"Wohoooo!!You made a record to guess a perfect number in {count} guesses")
+        file1=open("D:\PRACTICAL CIE 1\pythoncourse\OOPS\guess.txt",'w')
+        file1.write(str(count))#updating highscore
+        file1.close()
+    else:
+        print(f"You guess a perfect number in {count} guesses!")
+
+
+
