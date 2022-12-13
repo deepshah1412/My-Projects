@@ -1,0 +1,78 @@
+#100m women's olympic 
+import numpy as np
+import cmath
+import matplotlib.pyplot as plt
+from scipy import stats
+# Given data 'x' as years and 'y' as time taken
+x = [1928, 1932, 1936, 1948, 1952, 1956, 1960, 1964, 1968, 1972,
+1976, 1980, 1984, 1988, 1992, 1996, 2000, 2004, 2008, 2012, 2016]
+y = [12.20, 11.90, 11.50, 11.90, 11.50, 11.50, 11.00, 11.40, 11.00, 11.07,
+11.08, 11.06, 10.97, 10.54, 10.82, 10.94, 11.12, 10.93, 10.78, 10.75, 10.71]
+#sum of x and y
+sum_x=sum(x)
+sum_y=sum(y)
+print("sum of x:",sum_x)
+print("sum of y:",sum_y)
+#mean of x and y
+mean_x=round(sum(x)/len(x),3)
+mean_y=round(sum(y)/len(y),3)
+print("mean of x:",mean_x)
+print("mean of y:",mean_y)
+#xi-mean_x and yi-mean_y
+xi_mean_x=[]
+for i in range(len(x)):
+        xi_mean_x.append(round(x[i]-mean_x,3))
+yi_mean_y=[]
+for i in range(len(y)):
+        yi_mean_y.append(round(y[i]-mean_y,3))
+#total xi-mean_x and total yi-mean_y
+sum_xi_mean_x=sum(xi_mean_x)
+sum_yi_mean_y=sum(yi_mean_y)
+print("total_xi-mean_x:",sum_xi_mean_x)
+print("total_yi-mean_y:",sum_yi_mean_y)
+xi_mean_x=np.array(xi_mean_x)
+yi_mean_y=np.array(yi_mean_y)
+#finding xi-mean_x*yi-mean_y=mult
+mult=xi_mean_x*yi_mean_y
+#total of xi-mean_x*yi-mean_y=num
+num=sum(mult)
+print("total of xi-mean_x*yi-mean_y:", num)
+#square of xi_mean_x
+squareofxi_mean_x=sum(xi_mean_x*xi_mean_x)
+print("square of xi-mean_x:",squareofxi_mean_x)
+#square of yi_mean_y
+squareofyi_mean_y=sum(yi_mean_y*yi_mean_y)
+print("square of yi-mean_y:",squareofyi_mean_y)
+#finding B1
+B1=num/squareofxi_mean_x
+print("value of B1:",B1)
+#finding B0
+B1X=B1*mean_x
+B0=mean_y-B1X
+print("value of B0:",B0)
+#sigma x and sigma y
+inner_value_sqrtx=1/len(x)*squareofxi_mean_x
+sigma_x=cmath.sqrt(1/len(x)*squareofxi_mean_x)
+print("sigma_x is:",sigma_x)
+inner_value_sqrty=1/len(y)*squareofyi_mean_y
+sigma_y=cmath.sqrt(1/len(y)*squareofyi_mean_y)
+print("sigma_y is:",sigma_y)
+#finding R2
+lower_value_of_R2=sigma_x*sigma_y*len(x)
+upper_value_of_R2=num
+R21=(upper_value_of_R2/lower_value_of_R2)
+R2=np.round(R21*R21,3)
+print("Value of R2 is:",R2*100)
+#prediction of new data
+new_data_year=int(input("Enter the new year which you want to predict:"))
+predict_y=round(B0+(B1*new_data_year),3)
+print("Prediction of time for new data year is :",predict_y,"sec")
+#graph
+slope, intercept, r, p, std_err = stats.linregress(x, y)
+def myfunc(x):
+  return slope * x + intercept
+mymodel = list(map(myfunc, x))
+
+plt.scatter(x, y)
+plt.plot(x, mymodel)
+plt.show()
