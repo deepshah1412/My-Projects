@@ -6,31 +6,33 @@ receivers_amount=[]
 senders=[]
 senders_amount=[]
 members=int(input("How many people are you? "))#taking inputs
-for i in range (0,members):
-    name=input(f"Enter the name of member {i+1}:")
-    name_list.append(name)
-    amount=int(input(f"how many total rupees {name} paid yet? "))
-    amount_list.append(amount)
-for i in range (0,members):
-    print(f"{name_list[i]}:{amount_list[i]}")
-avg=int(sum(amount_list)/members)#compute avg
+def member(x):
+    for i in range (0,x):
+        name=input(f"Enter the name of member {i+1}:")
+        name_list.append(name)
+        amount=int(input(f"how many total rupees {name} paid yet? "))
+        amount_list.append(amount)
+def average(x):
+    for i in range (0,members):
+        print(f"{name_list[i]}:{amount_list[i]}")
+        avg=int(sum(amount_list)/members)#compute avg
+    print("\n\n-------------------")
 #print(avg)
-print("\n\n-------------------")
-for i in range(0,members): ##give us a summary that who have to receive and who have to pay
-    if amount_list[i]>=avg:
-        receviers.append(name_list[i])
-        receive=int(amount_list[i]-avg)
-        receivers_amount.append(receive)
-        print(f"{name_list[i]} have to receive total {receive} rupees")
-    else:
-        senders.append(name_list[i])
-        send=int(avg-amount_list[i])
-        senders_amount.append(send)
-        print(f"{name_list[i]} have to pay total {send} rupees")
-print("-------------------")
-print("")
-print("")
-print("----------Transactions----------")
+    for i in range(0,members): ##give us a summary that who have to receive and who have to pay
+        if amount_list[i]>=avg:
+            receviers.append(name_list[i])
+            receive=int(amount_list[i]-avg)
+            receivers_amount.append(receive)
+            print(f"{name_list[i]} have to receive total {receive} rupees")
+        else:
+            senders.append(name_list[i])
+            send=int(avg-amount_list[i])
+            senders_amount.append(send)
+            print(f"{name_list[i]} have to pay total {send} rupees")
+    print("-------------------")
+    print("")
+    print("")
+    print("----------Transactions----------")
 #print(receviers)
 #print(receivers_amount)
 #print(senders)
@@ -41,59 +43,66 @@ NS=len(senders_amount)#no of senders
 #max_senders=max(senders_amount)
 #print(f"maximum amount recieves:{max_receives}")
 #print(f"maximum amount senders:{max_senders}")
-for i in range (0,members):##transaction one to one 
-    max_receives=max(receivers_amount)
-    max_senders=max(senders_amount)
-    if max_receives==0 or max_senders==0:
-        break;
-    else:
-    #print(f"maximum amount of recieves:{max_receives}")
-    #print(f"maximum amount of senders:{max_senders}")
-        if max_receives>max_senders:
-        #senders_amount[i]=max_senders
-        #receivers_amount[i]=receivers_amount[i]-max_senders
-            for i in range (0,NR):
-                for j in range (0,NS):
-                    if receivers_amount[i]==max_receives:
-                        if senders_amount[j]==max_senders:
-                            receivers_amount[i]=receivers_amount[i]-senders_amount[j]
-                            print(f"{senders[j]} have to pay {senders_amount[j]} rupees to {receviers[i]}")
-                            senders_amount[j]=0
-                        else:  
-                            pass
-                        
-                    else:
-                        pass
-                             
-        elif max_receives<max_senders:
-            for i in range (0,NS):
-                for j in range (0,NR):
-                    if senders_amount[i]==max_senders:
-                        if receivers_amount[j]==max_receives:
-                            senders_amount[i]=senders_amount[i]-receivers_amount[j]
-                            print(f"{senders[i]} have to pay {receivers_amount[j]} rupees to {receviers[j]}")
-                            receivers_amount[j]=0
+def transaction(x):
+    NR=len(receivers_amount)#no of receivers
+    NS=len(senders_amount)#no of senders 
+    for i in range (0,x):##transaction one to one 
+        max_receives=max(receivers_amount)
+        max_senders=max(senders_amount)
+        if max_receives==0 or max_senders==0:
+            break;
+        else:
+        #print(f"maximum amount of recieves:{max_receives}")
+        #print(f"maximum amount of senders:{max_senders}")
+            if max_receives>max_senders:
+            #senders_amount[i]=max_senders
+            #receivers_amount[i]=receivers_amount[i]-max_senders
+                for i in range (0,NR):
+                    for j in range (0,NS):
+                        if receivers_amount[i]==max_receives:
+                            if senders_amount[j]==max_senders:
+                                receivers_amount[i]=receivers_amount[i]-senders_amount[j]
+                                print(f"{senders[j]} have to pay {senders_amount[j]} rupees to {receviers[i]}")
+                                senders_amount[j]=0
+                            else:  
+                                pass
                             
                         else:
                             pass
-                        
-                    else:
-                        pass
-        else :
-            for i in range (0,NS):
-                for j in range (0,NR):
-                    if senders_amount[i]==max_senders:
-                        if receivers_amount[j]==max_receives:
-                        #senders_amount[i]=senders_amount[i]-receivers_amount[j]
-                            print(f"{senders[i]} have to pay {receivers_amount[j]} rupees to {receviers[j]}")
-                            receivers_amount[j]=0
-                            senders_amount[i]=0
+                                
+            elif max_receives<max_senders:
+                for i in range (0,NS):
+                    for j in range (0,NR):
+                        if senders_amount[i]==max_senders:
+                            if receivers_amount[j]==max_receives:
+                                senders_amount[i]=senders_amount[i]-receivers_amount[j]
+                                print(f"{senders[i]} have to pay {receivers_amount[j]} rupees to {receviers[j]}")
+                                receivers_amount[j]=0
+                                
+                            else:
+                                pass
+                            
                         else:
                             pass
-                    else:
-                        pass
-print("----------All transactions are done.----------")
+            else :
+                for i in range (0,NS):
+                    for j in range (0,NR):
+                        if senders_amount[i]==max_senders:
+                            if receivers_amount[j]==max_receives:
+                            #senders_amount[i]=senders_amount[i]-receivers_amount[j]
+                                print(f"{senders[i]} have to pay {receivers_amount[j]} rupees to {receviers[j]}")
+                                receivers_amount[j]=0
+                                senders_amount[i]=0
+                            else:
+                                pass
+                        else:
+                            pass
+    print("----------All transactions are done.----------")
 #print(receivers_amount)
 #print(senders_amount)
+member(members)
+average(members)
+transaction(members)
 
 
+                     
